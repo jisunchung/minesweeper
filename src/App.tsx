@@ -1,9 +1,10 @@
 import "./App.css";
+import Game from "./components/Game/Game";
 
 function App() {
   return (
     <div className="App">
-      <div className="text-3xl font-bold underline">it goes Work!!</div>
+      <Game />
     </div>
   );
 }
