@@ -33,9 +33,13 @@ export const LEVEL = {
   INTERMEDIATE: "INTERMEDIATE",
   EXPERT: "EXPERT",
 } as const;
+export type LevelType = (typeof LEVEL)[keyof typeof LEVEL];
 
-export const LEVEL_DETAILS = {
+export const LEVEL_DETAILS: Record<
+  LevelType,
+  { col: number; row: number; mineNum: number }
+> = {
   BEGINNER: { col: 8, row: 8, mineNum: 10 },
   INTERMEDIATE: { col: 10, row: 14, mineNum: 40 },
   EXPERT: { col: 14, row: 32, mineNum: 99 },
-} as const;
+};
