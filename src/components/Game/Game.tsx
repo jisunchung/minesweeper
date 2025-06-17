@@ -1,8 +1,24 @@
+import { useRecoilState, useRecoilValue } from "recoil";
 import { LEVEL } from "../../types/game";
 import GmaeBoard from "./GameBoard";
 import GameControls from "./GameControls";
+import { boardGrid, BoardState, mineCountState } from "../../atoms/gameAtoms";
+import { initializeGameBoard } from "../../utils/gameUtils";
+import { useEffect } from "react";
 
 export default function Game() {
+  const [board, setBoard] = useRecoilState(BoardState);
+  const mine = useRecoilValue(mineCountState);
+  const [row, col] = useRecoilValue(boardGrid);
+
+  //초기화 함수
+  const resetGame = () => {
+    const newBoard = initializeGameBoard(row, col, mine);
+    setBoard(newBoard);
+  };
+  useEffect(() => {
+    resetGame();
+  }, []);
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-gray-800 text-white p-4 text-center">
@@ -40,15 +56,17 @@ export default function Game() {
               alert("hi");
             }}
           />
-          <GmaeBoard
-            board={Array.from({ length: 8 }, () => Array(8).fill(-1))}
-            onCellClick={() => {
-              alert("click");
-            }}
-            onCellRightClick={() => {
-              alert("우클릭");
-            }}
-          />
+          {board && (
+            <GmaeBoard
+              board={board}
+              onCellClick={() => {
+                alert("click");
+              }}
+              onCellRightClick={() => {
+                alert("우클릭");
+              }}
+            />
+          )}
         </main>
 
         {/* Aside */}

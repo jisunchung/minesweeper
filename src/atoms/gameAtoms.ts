@@ -20,6 +20,14 @@ export const mineCountState = selector<number>({
     return LEVEL_DETAILS[level].mineNum;
   },
 });
+//보드의 row col
+export const boardGrid = selector<[number, number]>({
+  key: "boardGrid",
+  get: ({ get }) => {
+    const level = get(levelState);
+    return [LEVEL_DETAILS[level].row, LEVEL_DETAILS[level].col];
+  },
+});
 
 //열려있는 셀
 export const openedCellCountState = atom<number>({

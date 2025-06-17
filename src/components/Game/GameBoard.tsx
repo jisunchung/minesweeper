@@ -16,7 +16,6 @@ export default function GameBoard({
 }: GameBoardProps) {
   const rowCount = board.length;
   const colCount = board[0]?.length || 0;
-
   return (
     <div
       style={{
