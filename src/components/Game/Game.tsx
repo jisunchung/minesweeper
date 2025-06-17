@@ -54,19 +54,9 @@ export default function Game() {
         </div>
 
         {/* Main */}
-        <main className="flex-1 p-4 bg-white">
+        <main className="flex-1 p-4 bg-gray-400">
           <GameControls onReset={resetGame} />
-          {board && (
-            <GameBoard
-              board={board}
-              onCellClick={() => {
-                alert("click");
-              }}
-              onCellRightClick={() => {
-                alert("우클릭");
-              }}
-            />
-          )}
+          {board && <GameBoard board={board} />}
         </main>
 
         {/* Aside */}
