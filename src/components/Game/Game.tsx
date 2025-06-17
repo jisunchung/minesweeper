@@ -36,16 +36,18 @@ export default function Game() {
         {/* Main */}
         <main className="flex-1 p-4 bg-white">
           <GameControls
-            mineCount={0}
-            flagCount={0}
             onReset={() => {
               alert("hi");
             }}
           />
           <GmaeBoard
             board={Array.from({ length: 8 }, () => Array(8).fill(-1))}
-            onCellClick={() => {}}
-            onCellRightClick={() => {}}
+            onCellClick={() => {
+              alert("click");
+            }}
+            onCellRightClick={() => {
+              alert("우클릭");
+            }}
           />
         </main>
 

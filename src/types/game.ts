@@ -7,19 +7,6 @@ export interface cell {
   flag: boolean;
 }
 
-export interface GameState {
-  board: cell[][];
-  level: string;
-  isGameOver: boolean;
-  isWin: boolean;
-  isFirstClick: boolean;
-  openedCellCount: number;
-  flagCount: number;
-  mineCount: number;
-  startTime: number | null;
-  endTime: number | null;
-}
-
 export const GameStatus = {
   READY: "READY",
   START: "START",
