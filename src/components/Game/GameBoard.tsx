@@ -20,8 +20,8 @@ export default function GameBoard({
     <div
       style={{
         display: "grid",
-        gridTemplateRows: `repeat(${rowCount}, 30px)`, // 각 셀 높이 고정
-        gridTemplateColumns: `repeat(${colCount}, 30px)`, // 각 셀 너비 고정
+        gridTemplateRows: `repeat(${rowCount}, 24px)`, // 각 셀 높이 고정
+        gridTemplateColumns: `repeat(${colCount}, 24px)`, // 각 셀 너비 고정
         gap: "2px",
         justifyContent: "center", // 내용이 넘칠 경우 왼쪽 정렬
       }}

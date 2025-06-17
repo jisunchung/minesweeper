@@ -1,24 +1,31 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { LEVEL } from "../../types/game";
-import GmaeBoard from "./GameBoard";
+import GameBoard from "./GameBoard";
 import GameControls from "./GameControls";
-import { boardGrid, BoardState, mineCountState } from "../../atoms/gameAtoms";
+import {
+  boardGrid,
+  BoardState,
+  levelState,
+  mineCountState,
+} from "../../atoms/gameAtoms";
 import { initializeGameBoard } from "../../utils/gameUtils";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 export default function Game() {
   const [board, setBoard] = useRecoilState(BoardState);
   const mine = useRecoilValue(mineCountState);
   const [row, col] = useRecoilValue(boardGrid);
+  const [level, setLevel] = useRecoilState(levelState);
 
   //초기화 함수
-  const resetGame = () => {
+  const resetGame = useCallback(() => {
     const newBoard = initializeGameBoard(row, col, mine);
     setBoard(newBoard);
-  };
+  }, [row, col, mine, setBoard]);
+
   useEffect(() => {
     resetGame();
-  }, []);
+  }, [level, resetGame]);
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-gray-800 text-white p-4 text-center">
@@ -28,36 +35,29 @@ export default function Game() {
       {/* 반응형 섹션: sm에서는 column, md 이상에서는 row */}
       <section className="flex flex-col md:flex-row flex-1">
         {/* Nav */}
-        <nav className="bg-gray-100 p-4 w-full md:w-52">
+        <div className="bg-gray-100 p-4 w-full md:w-52">
           <h2 className="text-lg font-semibold mb-3">LEVEL</h2>
-          <ul className="space-y-2">
-            <li>
-              <button className="w-full text-left text-blue-600 hover:underline">
-                {LEVEL.BEGINNER}
+          <div className="flex flex-col gap-2">
+            {Object.values(LEVEL).map((lv) => (
+              <button
+                key={lv}
+                type="button"
+                className={`px-3 py-2 rounded text-white transition ${
+                  level === lv ? "bg-sky-700" : "bg-sky-500 hover:bg-sky-600"
+                }`}
+                onClick={() => setLevel(lv)}
+              >
+                {lv}
               </button>
-            </li>
-            <li>
-              <button className="w-full text-left text-blue-600 hover:underline">
-                {LEVEL.EXPERT}
-              </button>
-            </li>
-            <li>
-              <button className="w-full text-left text-blue-600 hover:underline">
-                {LEVEL.INTERMEDIATE}
-              </button>
-            </li>
-          </ul>
-        </nav>
+            ))}
+          </div>
+        </div>
 
         {/* Main */}
         <main className="flex-1 p-4 bg-white">
-          <GameControls
-            onReset={() => {
-              alert("hi");
-            }}
-          />
+          <GameControls onReset={resetGame} />
           {board && (
-            <GmaeBoard
+            <GameBoard
               board={board}
               onCellClick={() => {
                 alert("click");
