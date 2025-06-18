@@ -2,7 +2,7 @@ import { useRecoilState } from "recoil";
 import type { cell } from "@/types/game";
 import { BoardState } from "@atoms/gameAtoms";
 import flagImg from "@assets/flag.png";
-// import svgflag from "@assets/flag.svg";
+import closedImg from "@assets/closed.png";
 
 //TODO : 개별 셀을 표시하고 클릭 이벤트 처리
 export default function GameCell({
@@ -26,7 +26,7 @@ export default function GameCell({
         backgroundImage: !cell.isOpen
           ? cell.flag
             ? `url(${flagImg})`
-            : `url("https://minesweeper.online/img/skins/hd/closed.svg?v=16")`
+            : `url(${closedImg})`
           : "none",
         backgroundSize: "24px 24px",
         backgroundColor: "#ccc",
