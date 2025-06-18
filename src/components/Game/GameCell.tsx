@@ -1,8 +1,14 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import type { cell } from "@/types/game";
-import { BoardState } from "@atoms/gameAtoms";
+import {
+  BoardState,
+  flagCountState,
+  mineCountState,
+  remainMineState,
+} from "@atoms/gameAtoms";
 import flagImg from "@assets/flag.png";
 import closedImg from "@assets/closed.png";
+import { toggleFlag } from "@/utils/gameUtils";
 
 //TODO : 개별 셀을 표시하고 클릭 이벤트 처리
 export default function GameCell({
@@ -15,14 +21,28 @@ export default function GameCell({
   cell: cell;
 }) {
   const [gameBoard, setGameBoard] = useRecoilState(BoardState);
+  const [flagCount, setFlagCount] = useRecoilState(flagCountState);
+  const mineNum = useRecoilValue(mineCountState);
+
+  const handleOnContextMenu = () => {
+    if (gameBoard !== null && !cell.isOpen) {
+      console.log("우클릭");
+      //깃발의 개수는 지뢰의 개수를 넘길 수 없음
+      if (!cell.flag && flagCount >= mineNum) {
+        alert("더 이상 깃발을 놓을 수 없음");
+        return;
+      }
+      const updateBoard = toggleFlag(gameBoard, rowIndex, colIndex);
+      setGameBoard(updateBoard.newBoard);
+      setFlagCount((prev) => prev + updateBoard.flagChangeAmount);
+    }
+  };
   return (
     <div
       className={`flex cursor-pointer text-[14px] items-center justify-center ${
         cell.isOpen ? "border-t border-l border-gray-500" : ""
       }`}
       style={{
-        // borderTop: cell.isOpen ? "1px solid" : "none",
-        // borderLeft: cell.isOpen ? "1px solid" : "none",
         backgroundImage: !cell.isOpen
           ? cell.flag
             ? `url(${flagImg})`
@@ -32,37 +52,25 @@ export default function GameCell({
         backgroundColor: "#ccc",
       }}
       onClick={() => {
-        alert(`${rowIndex}${colIndex} cell: ${cell.value}`);
         //셀을 열어줌
-        // Create a deep copy of the board to ensure immutability
-        if (gameBoard !== null) {
+        if (gameBoard !== null && !cell.flag && !cell.isOpen) {
+          console.log(
+            `셀 클릭 : ${rowIndex}, ${colIndex} cell value: ${cell.value}`
+          );
           const newBoard: cell[][] = gameBoard.map((row) => [...row]);
 
-          // Update the isOpen property of the specific cell
           if (newBoard[rowIndex] && newBoard[rowIndex][colIndex]) {
             newBoard[rowIndex][colIndex] = {
               ...newBoard[rowIndex][colIndex],
-              isOpen: true, // Set isOpen to true for the clicked cell
+              isOpen: true,
             };
           }
           setGameBoard(newBoard);
         }
-        // Update the atom with the new board
       }}
       onContextMenu={(e) => {
-        console.log("우클릭");
         e.preventDefault(); //기본 우클릭 메뉴 방지함
-        if (gameBoard !== null) {
-          const newBoard: cell[][] = gameBoard.map((row) => [...row]);
-
-          if (newBoard[rowIndex] && newBoard[rowIndex][colIndex]) {
-            newBoard[rowIndex][colIndex] = {
-              ...newBoard[rowIndex][colIndex],
-              flag: true,
-            };
-          }
-          setGameBoard(newBoard);
-        }
+        handleOnContextMenu();
       }}
     >
       <div>{cell.isOpen ? cell.value : null}</div>

@@ -54,3 +54,21 @@ export const initializeGameBoard = (
   console.table(board);
   return cellBoard;
 };
+
+//우클릭시 깃발 토글
+export const toggleFlag = (
+  gameBoard: cell[][],
+  row: number,
+  col: number
+): { newBoard: cell[][]; flagChangeAmount: number } => {
+  const newBoard: cell[][] = gameBoard.map((row) => [...row]);
+  let flagChangeAmount = 0;
+  if (newBoard[row] && newBoard[row][col]) {
+    newBoard[row][col] = {
+      ...newBoard[row][col],
+      flag: !gameBoard[row][col].flag,
+    };
+    flagChangeAmount = newBoard[row][col].flag ? 1 : -1;
+  }
+  return { newBoard, flagChangeAmount };
+};
