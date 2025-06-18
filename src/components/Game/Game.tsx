@@ -1,10 +1,11 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { LEVEL } from "@/types/game";
 import GameBoard from "./GameBoard";
 import GameControls from "./GameControls";
 import {
   boardGrid,
   BoardState,
+  flagCountState,
   levelState,
   mineCountState,
 } from "@atoms/gameAtoms";
@@ -16,11 +17,13 @@ export default function Game() {
   const mine = useRecoilValue(mineCountState);
   const [row, col] = useRecoilValue(boardGrid);
   const [level, setLevel] = useRecoilState(levelState);
+  const setFlagCount = useSetRecoilState(flagCountState);
 
   //초기화 함수
   const resetGame = useCallback(() => {
     const newBoard = initializeGameBoard(row, col, mine);
     setBoard(newBoard);
+    setFlagCount(0);
   }, [row, col, mine, setBoard]);
 
   useEffect(() => {

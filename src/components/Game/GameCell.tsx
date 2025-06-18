@@ -1,11 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import type { cell } from "@/types/game";
-import {
-  BoardState,
-  flagCountState,
-  mineCountState,
-  remainMineState,
-} from "@atoms/gameAtoms";
+import { BoardState, flagCountState, mineCountState } from "@atoms/gameAtoms";
 import flagImg from "@assets/flag.png";
 import closedImg from "@assets/closed.png";
 import { toggleFlag } from "@/utils/gameUtils";
