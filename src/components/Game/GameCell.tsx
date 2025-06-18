@@ -1,7 +1,8 @@
 import { useRecoilState } from "recoil";
-import type { cell } from "../../types/game";
-import { BoardState } from "../../atoms/gameAtoms";
-import flagImg from "../../assets/flag.png";
+import type { cell } from "@/types/game";
+import { BoardState } from "@atoms/gameAtoms";
+import flagImg from "@assets/flag.png";
+// import svgflag from "@assets/flag.svg";
 
 //TODO : 개별 셀을 표시하고 클릭 이벤트 처리
 export default function GameCell({

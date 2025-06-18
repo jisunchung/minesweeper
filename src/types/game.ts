@@ -27,6 +27,6 @@ export const LEVEL_DETAILS: Record<
   { col: number; row: number; mineNum: number }
 > = {
   BEGINNER: { col: 8, row: 8, mineNum: 10 },
-  INTERMEDIATE: { col: 14, row: 10, mineNum: 40 },
-  EXPERT: { col: 32, row: 14, mineNum: 99 },
+  INTERMEDIATE: { col: 16, row: 16, mineNum: 40 },
+  EXPERT: { col: 22, row: 22, mineNum: 99 },
 };

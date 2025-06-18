@@ -29,7 +29,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["@eslint/js", "npm:9.28.0"],\
-          ["@types/node", "npm:24.0.1"],\
+          ["@types/node", "npm:24.0.3"],\
           ["@types/react", "npm:19.1.8"],\
           ["@types/react-dom", "virtual:328bc1ea6518953d920bf9c23747448e9af477bcc665ad1cab78e18df6d6fb640cd1592e64a76eee4787e59ad86aa302aefadabba22f83bcb9e94d0a43717ee2#npm:19.1.6"],\
           ["@vitejs/plugin-react-swc", "virtual:328bc1ea6518953d920bf9c23747448e9af477bcc665ad1cab78e18df6d6fb640cd1592e64a76eee4787e59ad86aa302aefadabba22f83bcb9e94d0a43717ee2#npm:3.10.2"],\
@@ -1445,10 +1445,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@types/node", [\
-      ["npm:24.0.1", {\
-        "packageLocation": "../../../.yarn/berry/cache/@types-node-npm-24.0.1-5aabcdf68a-10c0.zip/node_modules/@types/node/",\
+      ["npm:24.0.3", {\
+        "packageLocation": "../../../.yarn/berry/cache/@types-node-npm-24.0.3-e96f3e375e-10c0.zip/node_modules/@types/node/",\
         "packageDependencies": [\
-          ["@types/node", "npm:24.0.1"],\
+          ["@types/node", "npm:24.0.3"],\
           ["undici-types", "npm:7.8.0"]\
         ],\
         "linkType": "HARD"\
@@ -3260,7 +3260,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["@eslint/js", "npm:9.28.0"],\
-          ["@types/node", "npm:24.0.1"],\
+          ["@types/node", "npm:24.0.3"],\
           ["@types/react", "npm:19.1.8"],\
           ["@types/react-dom", "virtual:328bc1ea6518953d920bf9c23747448e9af477bcc665ad1cab78e18df6d6fb640cd1592e64a76eee4787e59ad86aa302aefadabba22f83bcb9e94d0a43717ee2#npm:19.1.6"],\
           ["@vitejs/plugin-react-swc", "virtual:328bc1ea6518953d920bf9c23747448e9af477bcc665ad1cab78e18df6d6fb640cd1592e64a76eee4787e59ad86aa302aefadabba22f83bcb9e94d0a43717ee2#npm:3.10.2"],\
@@ -4543,7 +4543,7 @@ const RAW_RUNTIME_STATE =
           ["@types/jiti", null],\
           ["@types/less", null],\
           ["@types/lightningcss", null],\
-          ["@types/node", "npm:24.0.1"],\
+          ["@types/node", "npm:24.0.3"],\
           ["@types/sass", null],\
           ["@types/sass-embedded", null],\
           ["@types/stylus", null],\

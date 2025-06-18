@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { LEVEL } from "../../types/game";
+import { LEVEL } from "@/types/game";
 import GameBoard from "./GameBoard";
 import GameControls from "./GameControls";
 import {
@@ -7,8 +7,8 @@ import {
   BoardState,
   levelState,
   mineCountState,
-} from "../../atoms/gameAtoms";
-import { initializeGameBoard } from "../../utils/gameUtils";
+} from "@atoms/gameAtoms";
+import { initializeGameBoard } from "@utils/gameUtils";
 import { useCallback, useEffect } from "react";
 
 export default function Game() {

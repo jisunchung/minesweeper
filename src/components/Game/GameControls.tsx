@@ -2,7 +2,7 @@
 
 import { useRecoilValue } from "recoil";
 import GameTimer from "./GameTimer";
-import { flagCountState, remainMineState } from "../../atoms/gameAtoms";
+import { flagCountState, remainMineState } from "@atoms/gameAtoms";
 
 //params : { onReset}
 

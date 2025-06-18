@@ -1,6 +1,6 @@
 // TODO: 전체 게임 보드를 구성하고 셀들을 배치함
 
-import type { cell } from "../../types/game";
+import type { cell } from "@/types/game";
 import GameCell from "./GameCell";
 
 export default function GameBoard({ board }: { board: cell[][] }) {
