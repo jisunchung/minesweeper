@@ -12,6 +12,7 @@ export const levelState = atom<LevelType>({
   key: "levelState",
   default: "BEGINNER",
 });
+
 //지뢰 수
 export const mineCountState = selector<number>({
   key: "mineCountState",
@@ -20,6 +21,7 @@ export const mineCountState = selector<number>({
     return LEVEL_DETAILS[level].mineNum;
   },
 });
+
 //보드의 row col
 export const boardGrid = selector<[number, number]>({
   key: "boardGrid",

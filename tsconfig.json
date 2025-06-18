@@ -7,7 +7,8 @@
       "@components/*": ["src/components/*"],
       "@utils/*": ["src/utils/*"],
       "@types/*": ["src/types/*"],
-      "@atoms/*": ["src/atoms/*"]
+      "@atoms/*": ["src/atoms/*"],
+      "@hooks/*": ["src/hooks/*"]
     }
   },
   "files": [],
