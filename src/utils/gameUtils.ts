@@ -1,6 +1,8 @@
 //여러가지 게임 로직 구현
 
+import { useRecoilValue } from "recoil";
 import type { cell } from "../types/game";
+import { remainMineState } from "@/atoms/gameAtoms";
 
 //initializeGameBoard
 export const initializeGameBoard = (

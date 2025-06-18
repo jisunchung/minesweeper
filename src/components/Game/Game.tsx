@@ -6,6 +6,7 @@ import {
   boardGrid,
   BoardState,
   flagCountState,
+  foundMineCountState,
   levelState,
   mineCountState,
 } from "@atoms/gameAtoms";
@@ -18,12 +19,14 @@ export default function Game() {
   const [row, col] = useRecoilValue(boardGrid);
   const [level, setLevel] = useRecoilState(levelState);
   const setFlagCount = useSetRecoilState(flagCountState);
+  const setFoundMineCountState = useSetRecoilState(foundMineCountState);
 
   //초기화 함수
   const resetGame = useCallback(() => {
     const newBoard = initializeGameBoard(row, col, mine);
     setBoard(newBoard);
     setFlagCount(0);
+    setFoundMineCountState(0);
   }, [row, col, mine, setBoard]);
 
   useEffect(() => {

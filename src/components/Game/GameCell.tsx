@@ -1,6 +1,11 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import type { cell } from "@/types/game";
-import { BoardState, flagCountState, mineCountState } from "@atoms/gameAtoms";
+import {
+  BoardState,
+  flagCountState,
+  foundMineCountState,
+  mineCountState,
+} from "@atoms/gameAtoms";
 import flagImg from "@assets/flag.png";
 import closedImg from "@assets/closed.png";
 import { toggleFlag } from "@/utils/gameUtils";
@@ -18,18 +23,24 @@ export default function GameCell({
   const [gameBoard, setGameBoard] = useRecoilState(BoardState);
   const [flagCount, setFlagCount] = useRecoilState(flagCountState);
   const mineNum = useRecoilValue(mineCountState);
+  const setFoundMineCount = useSetRecoilState(foundMineCountState);
 
   const handleOnContextMenu = () => {
     if (gameBoard !== null && !cell.isOpen) {
-      console.log("우클릭");
+      console.log(`우클릭 ${rowIndex}, ${colIndex} , value : ${cell.value}`);
       //깃발의 개수는 지뢰의 개수를 넘길 수 없음
       if (!cell.flag && flagCount >= mineNum) {
         alert("더 이상 깃발을 놓을 수 없음");
         return;
       }
+
       const updateBoard = toggleFlag(gameBoard, rowIndex, colIndex);
       setGameBoard(updateBoard.newBoard);
       setFlagCount((prev) => prev + updateBoard.flagChangeAmount);
+      //찾은 지뢰 갱신
+      if (cell.value === -1) {
+        setFoundMineCount((prev) => prev + updateBoard.flagChangeAmount);
+      }
     }
   };
   return (

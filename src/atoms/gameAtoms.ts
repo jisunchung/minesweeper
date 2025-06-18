@@ -41,10 +41,15 @@ export const flagCountState = atom<number>({
   default: 0,
 });
 
-//남은 지뢰 -> 지뢰 수에서 깃발 수 빼면됨
+//UI에 표시되는 남은 지뢰 -> 지뢰 수에서 깃발 수 빼면됨
 export const remainMineState = selector<number>({
   key: "remainMineState",
   get: ({ get }) => {
     return get(mineCountState) - get(flagCountState);
   },
+});
+
+export const foundMineCountState = atom<number>({
+  key: "foundMineCountState",
+  default: 0,
 });
