@@ -17,8 +17,7 @@ type GameControlsProps = {
 export default function GameControls({ onReset }: GameControlsProps) {
   const remainMines = useRecoilValue(remainMineState);
   const flagCount = useRecoilValue(flagCountState);
-  const [foundMineCount, setFoundMineCount] =
-    useRecoilState(foundMineCountState);
+  const [foundMineCount, _] = useRecoilState(foundMineCountState);
   return (
     <div className="flex flex-col sm:flex-row sm:justify-around sm:items-center gap-2 bg-yellow-200 py-2 px-4 rounded-md shadow mb-4">
       <div className="text-sm font-medium text-center sm:text-left">
