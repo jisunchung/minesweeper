@@ -106,9 +106,13 @@ export default function GameCell({
   };
   return (
     <div
-      className={`flex cursor-pointer text-[14px] font-medium items-center justify-center ${
-        cell.isOpen ? "border-t border-l border-gray-500" : ""
-      } ${cell.value !== -1 ? "bg-stone-300" : "bg-red-500"}`}
+      className={`flex text-[14px] font-medium items-center justify-center ${
+        cell.isOpen
+          ? `border-t border-l border-gray-500 ${
+              cell.value !== -1 ? "bg-stone-300" : "bg-red-500"
+            }`
+          : ""
+      } `}
       style={{
         backgroundImage: !cell.isOpen
           ? cell.flag

@@ -9,7 +9,7 @@ import {
   openedCellCountState,
 } from "@/atoms/gameAtoms";
 import { initializeGameBoard } from "@/utils/gameUtils";
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 export function useGameReset() {
   const setBoard = useSetRecoilState(BoardState);
