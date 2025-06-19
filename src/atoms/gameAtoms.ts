@@ -13,6 +13,11 @@ export const levelState = atom<LevelType>({
   default: "BEGINNER",
 });
 
+//지뢰 위치
+export const minePositionsState = atom<number[][]>({
+  key: "minePositionsState",
+  default: [],
+});
 //지뢰 수
 export const mineCountState = selector<number>({
   key: "mineCountState",

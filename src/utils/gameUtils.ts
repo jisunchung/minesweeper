@@ -6,20 +6,20 @@ export const initializeGameBoard = (
   rows: number,
   cols: number,
   mineCount: number
-): cell[][] => {
+): { cellBoard: cell[][]; minePositions: number[][] } => {
   const board = Array.from({ length: rows }, () => Array(cols).fill(0));
   //지뢰 랜덤 배치
-  let mine = 0;
+  let placedMines = 0;
   const minePositions: [number, number][] = [];
   const MINE = -1;
 
-  while (mine !== mineCount) {
+  while (placedMines !== mineCount) {
     const randomRow = Math.floor(Math.random() * rows);
     const randomCol = Math.floor(Math.random() * cols);
     if (board[randomRow][randomCol] !== -1) {
       board[randomRow][randomCol] = MINE;
       minePositions.push([randomRow, randomCol]);
-      mine++;
+      placedMines++;
     }
   }
   //지뢰 수 count
@@ -51,7 +51,7 @@ export const initializeGameBoard = (
   );
   //   console.table(cellBoard);
   console.table(board);
-  return cellBoard;
+  return { cellBoard, minePositions };
 };
 
 //우클릭시 깃발 토글
