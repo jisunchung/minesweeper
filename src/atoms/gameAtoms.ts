@@ -18,6 +18,7 @@ export const minePositionsState = atom<number[][]>({
   key: "minePositionsState",
   default: [],
 });
+
 //지뢰 수
 export const mineCountState = selector<number>({
   key: "mineCountState",

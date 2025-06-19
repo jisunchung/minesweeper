@@ -5,13 +5,13 @@ import {
   flagCountState,
   foundMineCountState,
   mineCountState,
+  minePositionsState,
   openedCellCountState,
 } from "@atoms/gameAtoms";
 import flagImg from "@assets/flag.png";
 import closedImg from "@assets/closed.png";
 import { openAdjacentBlank, toggleFlag } from "@/utils/gameUtils";
 
-//TODO : 개별 셀을 표시하고 클릭 이벤트 처리
 export default function GameCell({
   rowIndex,
   colIndex,
@@ -26,6 +26,8 @@ export default function GameCell({
   const mineNum = useRecoilValue(mineCountState);
   const setFoundMineCount = useSetRecoilState(foundMineCountState);
   const setOpenedCellCount = useSetRecoilState(openedCellCountState);
+  const minePostions = useRecoilValue(minePositionsState);
+
   const handleOnContextMenu = () => {
     if (gameBoard !== null && !cell.isOpen) {
       console.log(`우클릭 ${rowIndex}, ${colIndex} , value : ${cell.value}`);
@@ -69,6 +71,17 @@ export default function GameCell({
       }
 
       //지뢰 -> 지뢰 다 열기 -> 게임 over
+      if (cell.value === -1) {
+        minePostions.map((position) => {
+          const [mineRow, mineCol] = position;
+          newBoard[mineRow][mineCol].isOpen = true;
+        });
+
+        //TODO : GameOver
+        setTimeout(() => {
+          alert("GAMEOVER!");
+        }, 1000);
+      }
 
       //빈칸 -> 인접한 빈칸 다 열기
       if (cell.value === 0) {
@@ -109,7 +122,7 @@ export default function GameCell({
         handleOnContextMenu();
       }}
     >
-      <div>{viewCellValue(cell.value)}</div>
+      <div>{cell.isOpen ? viewCellValue(cell.value) : null}</div>
     </div>
   );
 }
