@@ -4,6 +4,7 @@ import {
   flagCountState,
   foundMineCountState,
   gameStatusState,
+  gameTimerState,
   mineCountState,
   minePositionsState,
   openedCellCountState,
@@ -18,6 +19,7 @@ export function useGameReset() {
   const setMinePositions = useSetRecoilState(minePositionsState);
   const setOpenedCellCountState = useSetRecoilState(openedCellCountState);
   const setGameStatus = useSetRecoilState(gameStatusState);
+  const setGameTimer = useSetRecoilState(gameTimerState);
   const mineCount = useRecoilValue(mineCountState);
   const [row, col] = useRecoilValue(boardGridState);
 
@@ -34,6 +36,7 @@ export function useGameReset() {
     setOpenedCellCountState(0);
     setMinePositions(minePositions);
     setGameStatus("READY");
+    setGameTimer(0);
   };
 
   return { resetGame };

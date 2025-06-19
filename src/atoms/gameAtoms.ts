@@ -12,6 +12,12 @@ export const gameStatusState = atom<GameStatusType>({
   default: "READY",
 });
 
+//타이머
+export const gameTimerState = atom<number>({
+  key: "gameTimerState",
+  default: 0,
+});
+
 //보드
 export const BoardState = atom<cell[][] | null>({
   key: "gameBoardState",
