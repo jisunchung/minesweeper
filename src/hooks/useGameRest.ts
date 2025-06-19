@@ -3,12 +3,13 @@ import {
   BoardState,
   flagCountState,
   foundMineCountState,
+  gameStatusState,
   mineCountState,
   minePositionsState,
   openedCellCountState,
 } from "@/atoms/gameAtoms";
 import { initializeGameBoard } from "@/utils/gameUtils";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 
 export function useGameReset() {
   const setBoard = useSetRecoilState(BoardState);
@@ -16,6 +17,7 @@ export function useGameReset() {
   const setFoundMineCount = useSetRecoilState(foundMineCountState);
   const setMinePositions = useSetRecoilState(minePositionsState);
   const setOpenedCellCountState = useSetRecoilState(openedCellCountState);
+  const setGameStatus = useSetRecoilState(gameStatusState);
   const mineCount = useRecoilValue(mineCountState);
   const [row, col] = useRecoilValue(boardGridState);
 
@@ -31,6 +33,7 @@ export function useGameReset() {
     setFoundMineCount(0);
     setOpenedCellCountState(0);
     setMinePositions(minePositions);
+    setGameStatus("READY");
   };
 
   return { resetGame };

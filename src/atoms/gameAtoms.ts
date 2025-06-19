@@ -1,5 +1,16 @@
-import { LEVEL_DETAILS, type cell, type LevelType } from "@/types/game";
+import {
+  type GameStatusType,
+  LEVEL_DETAILS,
+  type cell,
+  type LevelType,
+} from "@/types/game";
 import { atom, selector } from "recoil";
+
+//게임 상태
+export const gameStatusState = atom<GameStatusType>({
+  key: "gameStatusState",
+  default: "READY",
+});
 
 //보드
 export const BoardState = atom<cell[][] | null>({

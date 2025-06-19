@@ -4,6 +4,7 @@ import {
   BoardState,
   flagCountState,
   foundMineCountState,
+  gameStatusState,
   mineCountState,
   minePositionsState,
   openedCellCountState,
@@ -26,11 +27,14 @@ export default function GameCell({
   const mineNum = useRecoilValue(mineCountState);
   const setFoundMineCount = useSetRecoilState(foundMineCountState);
   const setOpenedCellCount = useSetRecoilState(openedCellCountState);
+  const [gameStatus, setGameStatus] = useRecoilState(gameStatusState);
   const minePostions = useRecoilValue(minePositionsState);
 
   const handleOnContextMenu = () => {
     if (gameBoard !== null && !cell.isOpen) {
       console.log(`우클릭 ${rowIndex}, ${colIndex} , value : ${cell.value}`);
+
+      setGameStatus("START");
       //깃발의 개수는 지뢰의 개수를 넘길 수 없음
       if (!cell.flag && flagCount >= mineNum) {
         alert("더 이상 깃발을 놓을 수 없음");
@@ -52,6 +56,7 @@ export default function GameCell({
       console.log(
         `셀 클릭 : ${rowIndex}, ${colIndex} cell value: ${cell.value}`
       );
+      setGameStatus("START");
       let newBoard: cell[][] = gameBoard.map((row) =>
         row.map((cell) => ({ ...cell }))
       );
@@ -77,10 +82,7 @@ export default function GameCell({
           newBoard[mineRow][mineCol].isOpen = true;
         });
 
-        //TODO : GameOver
-        setTimeout(() => {
-          alert("GAMEOVER!");
-        }, 1000);
+        setGameStatus("LOSE");
       }
 
       //빈칸 -> 인접한 빈칸 다 열기
@@ -115,10 +117,20 @@ export default function GameCell({
           : "none",
         backgroundSize: "24px 24px",
       }}
-      onClick={handleOnClick}
+      onClick={(e) => {
+        if (gameStatus === "LOSE") {
+          e.stopPropagation();
+        } else {
+          handleOnClick();
+        }
+      }}
       onContextMenu={(e) => {
         e.preventDefault(); //기본 우클릭 메뉴 방지함
-        handleOnContextMenu();
+        if (gameStatus === "LOSE") {
+          e.stopPropagation();
+        } else {
+          handleOnContextMenu();
+        }
       }}
     >
       <div>{cell.isOpen ? viewCellValue(cell.value) : null}</div>
