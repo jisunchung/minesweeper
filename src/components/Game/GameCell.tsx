@@ -34,7 +34,7 @@ export default function GameCell({
   const isGameWon = useRecoilValue(isGameWonState);
 
   const handleOnContextMenu = () => {
-    if (gameBoard !== null && !cell.isOpen) {
+    if (!cell.isOpen) {
       console.log(`우클릭 ${rowIndex}, ${colIndex} , value : ${cell.value}`);
 
       setGameStatus("START");
@@ -55,7 +55,7 @@ export default function GameCell({
   };
 
   const handleOnClick = () => {
-    if (gameBoard !== null && !cell.flag && !cell.isOpen) {
+    if (!cell.flag && !cell.isOpen) {
       console.log(
         `셀 클릭 : ${rowIndex}, ${colIndex} cell value: ${cell.value}`
       );

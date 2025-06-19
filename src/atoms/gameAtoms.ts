@@ -19,9 +19,9 @@ export const gameTimerState = atom<number>({
 });
 
 //보드
-export const BoardState = atom<cell[][] | null>({
+export const BoardState = atom<cell[][]>({
   key: "gameBoardState",
-  default: null,
+  default: [],
 });
 
 //게임 Level
