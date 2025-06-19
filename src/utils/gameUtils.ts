@@ -81,52 +81,47 @@ export const openAdjacentBlank = (
   board: cell[][],
   startRow: number,
   startCol: number
-): { openedBoard: cell[][]; openedBlankCellCount: number } => {
-  const openedBoard = board;
-  //  방문한 셀을 추적하기 위한 Set
-  const visited = new Set<string>();
+): { openedBoard: cell[][]; updateCellCount: number } => {
+  const openedBoard = deepCopyBoard(board);
+
   const ROWS = openedBoard.length;
   const COLS = openedBoard[0].length;
+  const visited = Array.from({ length: ROWS }, () => Array(COLS).fill(false));
 
   // BFS를 위한 큐
   const queue: [number, number][] = [[startRow, startCol]];
+  let updateCellCount = 1;
 
   let front = 0;
   while (front < queue.length) {
     const [row, col] = queue[front++];
-    const cellKey = `${row},${col}`;
 
     // 현재 셀 방문 표시
-    visited.add(cellKey);
+    visited[row][col] = true;
     openedBoard[row][col].isOpen = true;
 
-    // 빈 셀인 경우에만 주변 셀을 큐에 추가
-    if (openedBoard[row][col].value === 0) {
-      // 주변 8방향의 셀을 큐에 추가
-      for (let i = -1; i <= 1; i++) {
-        for (let j = -1; j <= 1; j++) {
-          if (i === 0 && j === 0) continue; // 현재 셀은 건너뛰기
-          const newRow = row + i;
-          const newCol = col + j;
-          const newCellKey = `${newRow},${newCol}`;
+    // 주변 8방향의 셀을 큐에 추가
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        if (i === 0 && j === 0) continue; // 현재 셀은 건너뛰기
+        const [newRow, newCol] = [row + i, col + j];
 
-          // 유효한 위치이고 아직 방문하지 않고 빈 셀인 경우에만 셀만 큐에 추가
-          if (
-            newRow >= 0 &&
-            newRow < ROWS &&
-            newCol >= 0 &&
-            newCol < COLS &&
-            openedBoard[newRow][newCol].value === 0 &&
-            !visited.has(newCellKey) &&
-            !openedBoard[newRow][newCol].isOpen
-          ) {
-            queue.push([newRow, newCol]);
-          }
+        // 유효한 위치이고 아직 방문하지 않고 빈 셀인 경우에만 셀만 큐에 추가
+        if (
+          newRow >= 0 &&
+          newRow < ROWS &&
+          newCol >= 0 &&
+          newCol < COLS &&
+          openedBoard[newRow][newCol].value === 0 &&
+          !visited[newRow][newCol]
+        ) {
+          queue.push([newRow, newCol]);
+          visited[newRow][newCol] = true;
+          updateCellCount++;
         }
       }
     }
   }
-  const openedBlankCellCount = visited.size;
 
-  return { openedBoard, openedBlankCellCount };
+  return { openedBoard, updateCellCount };
 };

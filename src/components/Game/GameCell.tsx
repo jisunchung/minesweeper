@@ -90,13 +90,13 @@ export default function GameCell({
 
       //빈칸 -> 인접한 빈칸 다 열기
       if (cell.value === 0) {
-        const { openedBoard, openedBlankCellCount } = openAdjacentBlank(
+        const { openedBoard, updateCellCount } = openAdjacentBlank(
           newBoard,
           rowIndex,
           colIndex
         );
         newBoard = openedBoard;
-        setOpenedCellCount((prev) => prev + openedBlankCellCount);
+        setOpenedCellCount((prev) => prev + updateCellCount);
       }
 
       setGameBoard(newBoard);
