@@ -60,7 +60,7 @@ export const toggleFlag = (
   row: number,
   col: number
 ): { newBoard: cell[][]; flagChangeAmount: number } => {
-  const newBoard: cell[][] = gameBoard.map((row) => [...row]);
+  const newBoard = deepCopyBoard(gameBoard);
   let flagChangeAmount = 0;
   if (newBoard[row] && newBoard[row][col]) {
     newBoard[row][col] = {
@@ -70,4 +70,63 @@ export const toggleFlag = (
     flagChangeAmount = newBoard[row][col].flag ? 1 : -1;
   }
   return { newBoard, flagChangeAmount };
+};
+
+export const deepCopyBoard = (board: cell[][]): cell[][] => {
+  return board.map((row) => row.map((cell) => ({ ...cell })));
+};
+
+//인접한 빈칸 모두 열기
+export const openAdjacentBlank = (
+  board: cell[][],
+  startRow: number,
+  startCol: number
+): { openedBoard: cell[][]; openedBlankCellCount: number } => {
+  const openedBoard = board;
+  //  방문한 셀을 추적하기 위한 Set
+  const visited = new Set<string>();
+  const ROWS = openedBoard.length;
+  const COLS = openedBoard[0].length;
+
+  // BFS를 위한 큐
+  const queue: [number, number][] = [[startRow, startCol]];
+
+  let front = 0;
+  while (front < queue.length) {
+    const [row, col] = queue[front++];
+    const cellKey = `${row},${col}`;
+
+    // 현재 셀 방문 표시
+    visited.add(cellKey);
+    openedBoard[row][col].isOpen = true;
+
+    // 빈 셀인 경우에만 주변 셀을 큐에 추가
+    if (openedBoard[row][col].value === 0) {
+      // 주변 8방향의 셀을 큐에 추가
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          if (i === 0 && j === 0) continue; // 현재 셀은 건너뛰기
+          const newRow = row + i;
+          const newCol = col + j;
+          const newCellKey = `${newRow},${newCol}`;
+
+          // 유효한 위치이고 아직 방문하지 않고 빈 셀인 경우에만 셀만 큐에 추가
+          if (
+            newRow >= 0 &&
+            newRow < ROWS &&
+            newCol >= 0 &&
+            newCol < COLS &&
+            openedBoard[newRow][newCol].value === 0 &&
+            !visited.has(newCellKey) &&
+            !openedBoard[newRow][newCol].isOpen
+          ) {
+            queue.push([newRow, newCol]);
+          }
+        }
+      }
+    }
+  }
+  const openedBlankCellCount = visited.size;
+
+  return { openedBoard, openedBlankCellCount };
 };

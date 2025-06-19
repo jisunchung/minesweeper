@@ -5,10 +5,11 @@ import {
   flagCountState,
   foundMineCountState,
   mineCountState,
+  openedCellCountState,
 } from "@atoms/gameAtoms";
 import flagImg from "@assets/flag.png";
 import closedImg from "@assets/closed.png";
-import { toggleFlag } from "@/utils/gameUtils";
+import { openAdjacentBlank, toggleFlag } from "@/utils/gameUtils";
 
 //TODO : 개별 셀을 표시하고 클릭 이벤트 처리
 export default function GameCell({
@@ -24,7 +25,7 @@ export default function GameCell({
   const [flagCount, setFlagCount] = useRecoilState(flagCountState);
   const mineNum = useRecoilValue(mineCountState);
   const setFoundMineCount = useSetRecoilState(foundMineCountState);
-
+  const setOpenedCellCount = useSetRecoilState(openedCellCountState);
   const handleOnContextMenu = () => {
     if (gameBoard !== null && !cell.isOpen) {
       console.log(`우클릭 ${rowIndex}, ${colIndex} , value : ${cell.value}`);
@@ -43,6 +44,51 @@ export default function GameCell({
       }
     }
   };
+
+  const handleOnClick = () => {
+    if (gameBoard !== null && !cell.flag && !cell.isOpen) {
+      console.log(
+        `셀 클릭 : ${rowIndex}, ${colIndex} cell value: ${cell.value}`
+      );
+      let newBoard: cell[][] = gameBoard.map((row) =>
+        row.map((cell) => ({ ...cell }))
+      );
+
+      //1~8 -> 셀 열기
+      if (
+        newBoard[rowIndex] &&
+        newBoard[rowIndex][colIndex] &&
+        cell.value >= 1 &&
+        cell.value <= 8
+      ) {
+        newBoard[rowIndex][colIndex] = {
+          ...newBoard[rowIndex][colIndex],
+          isOpen: true,
+        };
+        setOpenedCellCount((prev) => prev + 1);
+      }
+
+      //지뢰 -> 지뢰 다 열기 -> 게임 over
+
+      //빈칸 -> 인접한 빈칸 다 열기
+      if (cell.value === 0) {
+        const { openedBoard, openedBlankCellCount } = openAdjacentBlank(
+          newBoard,
+          rowIndex,
+          colIndex
+        );
+        newBoard = openedBoard;
+        setOpenedCellCount((prev) => prev + openedBlankCellCount);
+      }
+
+      setGameBoard(newBoard);
+    }
+  };
+  const viewCellValue = (cellValue: number) => {
+    if (cellValue === -1) return "💣";
+    else if (cellValue === 0) return "";
+    else return cellValue.toString(); // 1~8 숫자 표시
+  };
   return (
     <div
       className={`flex cursor-pointer text-[14px] items-center justify-center ${
@@ -57,29 +103,13 @@ export default function GameCell({
         backgroundSize: "24px 24px",
         backgroundColor: "#ccc",
       }}
-      onClick={() => {
-        //셀을 열어줌
-        if (gameBoard !== null && !cell.flag && !cell.isOpen) {
-          console.log(
-            `셀 클릭 : ${rowIndex}, ${colIndex} cell value: ${cell.value}`
-          );
-          const newBoard: cell[][] = gameBoard.map((row) => [...row]);
-
-          if (newBoard[rowIndex] && newBoard[rowIndex][colIndex]) {
-            newBoard[rowIndex][colIndex] = {
-              ...newBoard[rowIndex][colIndex],
-              isOpen: true,
-            };
-          }
-          setGameBoard(newBoard);
-        }
-      }}
+      onClick={handleOnClick}
       onContextMenu={(e) => {
         e.preventDefault(); //기본 우클릭 메뉴 방지함
         handleOnContextMenu();
       }}
     >
-      <div>{cell.isOpen ? cell.value : null}</div>
+      <div>{viewCellValue(cell.value)}</div>
     </div>
   );
 }
