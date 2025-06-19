@@ -3,11 +3,7 @@ import GameSidebar, { LevelSelector, GameDescription } from "./GameSidebar";
 import GameMain from "./GameMain";
 import GameFooter from "./GameFooter";
 
-interface GameLayoutProps {
-  onReset: () => void;
-}
-
-export default function GameLayout({ onReset }: GameLayoutProps) {
+export default function GameLayout() {
   return (
     <div className="flex flex-col min-h-screen">
       <GameHeader />
@@ -20,10 +16,10 @@ export default function GameLayout({ onReset }: GameLayoutProps) {
         </GameSidebar>
 
         {/* Main */}
-        <GameMain onReset={onReset} />
+        <GameMain />
 
         {/* Aside */}
-        <GameSidebar title="">
+        <GameSidebar title="게임 조작 설명">
           <GameDescription />
         </GameSidebar>
       </section>

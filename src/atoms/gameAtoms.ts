@@ -23,7 +23,7 @@ export const mineCountState = selector<number>({
 });
 
 //보드의 row col
-export const boardGrid = selector<[number, number]>({
+export const boardGridState = selector<[number, number]>({
   key: "boardGrid",
   get: ({ get }) => {
     const level = get(levelState);

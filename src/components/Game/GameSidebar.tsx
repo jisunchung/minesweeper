@@ -45,7 +45,6 @@ export function LevelSelector() {
 export function GameDescription() {
   return (
     <div>
-      <h3 className="text-lg font-medium mb-2">설명</h3>
       <p className="text-sm text-gray-700">게임 조작 방법에 대한 설명</p>
     </div>
   );
