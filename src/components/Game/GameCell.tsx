@@ -104,9 +104,9 @@ export default function GameCell({
   };
   return (
     <div
-      className={`flex cursor-pointer text-[14px] items-center justify-center ${
+      className={`flex cursor-pointer text-[14px] font-medium items-center justify-center ${
         cell.isOpen ? "border-t border-l border-gray-500" : ""
-      }`}
+      } ${cell.value !== -1 ? "bg-stone-300" : "bg-red-500"}`}
       style={{
         backgroundImage: !cell.isOpen
           ? cell.flag
@@ -114,7 +114,6 @@ export default function GameCell({
             : `url(${closedImg})`
           : "none",
         backgroundSize: "24px 24px",
-        backgroundColor: "#ccc",
       }}
       onClick={handleOnClick}
       onContextMenu={(e) => {
