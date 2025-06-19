@@ -3,6 +3,7 @@
 import { useRecoilValue } from "recoil";
 import GameTimer from "./GameTimer";
 import {
+  boardGridState,
   flagCountState,
   foundMineCountState,
   gameStatusState,
@@ -14,23 +15,64 @@ import { useGameReset } from "@/hooks/useGameRest";
 export default function GameControls() {
   const remainMines = useRecoilValue(remainMineState);
   const flagCount = useRecoilValue(flagCountState);
+  const gameStatus = useRecoilValue(gameStatusState);
+  const boardGrid = useRecoilValue(boardGridState);
+
   const { resetGame } = useGameReset();
+  const [row, col] = boardGrid;
+
+  const showStatusEmoji = () => {
+    let emoji = "";
+    if (gameStatus === "LOSE") emoji = "😭";
+    else if (gameStatus === "WIN") emoji = "😎";
+    else emoji = "🙂";
+
+    return <div className="text-lg">{emoji}</div>;
+  };
 
   // test
-  const foundMineCount = useRecoilValue(foundMineCountState);
-  const openedCellCount = useRecoilValue(openedCellCountState);
-  const gameStatus = useRecoilValue(gameStatusState);
+  // const foundMineCount = useRecoilValue(foundMineCountState);
+  // const openedCellCount = useRecoilValue(openedCellCountState);
+  // const gameStatus = useRecoilValue(gameStatusState);
   //
   return (
-    <div className="flex flex-col sm:flex-row sm:justify-around sm:items-center gap-2 bg-yellow-200 py-2 px-4 rounded-md shadow mb-4">
-      <div className="text-sm font-medium text-center sm:text-left">
-        💣 남은 지뢰: <span className="font-bold">{remainMines}</span>
-      </div>
-      <div className="text-sm font-medium text-center sm:text-left">
-        🚩 깃발: <span className="font-bold">{flagCount}</span>
-      </div>
-      {/* TEST */}
-      <div className="text-sm font-medium text-center sm:text-left">
+    <div className="flex justify-center ">
+      <div
+        className="flex justify-center bg-gray-300"
+        style={{
+          width: `${col * 24 + 10}px`,
+        }}
+      >
+        <div
+          className="flex flex-row items-center border my-1 bg-gray-100"
+          style={{
+            width: `${col * 24}px`,
+          }}
+        >
+          {/* 남은 지뢰 수 */}
+          <div className="flex justify-center basis-1/3 ">
+            <span className="font-bold">{remainMines}</span>
+          </div>
+
+          {/* 새 게임 */}
+          <div className="flex justify-center basis-1/3 m-2">
+            <button
+              type="button"
+              onClick={resetGame}
+              className="bg-stone-400 hover:bg-stone-500 px-4  "
+            >
+              {showStatusEmoji()}
+            </button>
+          </div>
+
+          {/* 타이머 */}
+          <div className="flex justify-center basis-1/3 ">
+            <GameTimer />
+          </div>
+        </div>
+
+        {/* TEST */}
+        {/* <div className="text-sm font-medium text-center sm:text-left">
         찾은 지뢰: <span className="font-bold">{foundMineCount}</span>
       </div>
       <div className="text-sm font-medium text-center sm:text-left">
@@ -38,19 +80,8 @@ export default function GameControls() {
       </div>
       <div className="text-sm font-medium text-center sm:text-left">
         게임 상태: <span className="font-bold">{gameStatus}</span>
-      </div>
-      {/*  */}
-      <div className="flex justify-center sm:justify-start">
-        <GameTimer />
-      </div>
-      <div className="flex justify-center sm:justify-start">
-        <button
-          type="button"
-          onClick={resetGame}
-          className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded"
-        >
-          다시 시작
-        </button>
+      </div> */}
+        {/*  */}
       </div>
     </div>
   );

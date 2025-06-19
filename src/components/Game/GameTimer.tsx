@@ -18,10 +18,5 @@ export default function GameTimer() {
     };
   }, [gameStatus]);
 
-  return (
-    <div>
-      <h1>GameTimer</h1>
-      {time}
-    </div>
-  );
+  return <div className="font-bold">{time}</div>;
 }

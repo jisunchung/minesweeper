@@ -146,7 +146,7 @@ export default function GameCell({
         }
       }}
     >
-      <div>{!cell.isOpen ? viewCellValue(cell.value) : null}</div>
+      <div>{cell.isOpen ? viewCellValue(cell.value) : null}</div>
     </div>
   );
 }
