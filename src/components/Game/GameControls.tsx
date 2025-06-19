@@ -1,25 +1,19 @@
-//TODO : 게임 컨트롤 (남은 지뢰, 깃발, 새 게임 버튼)
-
 import { useRecoilValue } from "recoil";
 import GameTimer from "./GameTimer";
 import {
   boardGridState,
-  flagCountState,
-  foundMineCountState,
   gameStatusState,
-  openedCellCountState,
   remainMineState,
 } from "@atoms/gameAtoms";
 import { useGameReset } from "@/hooks/useGameRest";
 
 export default function GameControls() {
   const remainMines = useRecoilValue(remainMineState);
-  const flagCount = useRecoilValue(flagCountState);
   const gameStatus = useRecoilValue(gameStatusState);
   const boardGrid = useRecoilValue(boardGridState);
 
   const { resetGame } = useGameReset();
-  const [row, col] = boardGrid;
+  const [_, col] = boardGrid;
 
   const showStatusEmoji = () => {
     let emoji = "";
@@ -27,14 +21,9 @@ export default function GameControls() {
     else if (gameStatus === "WIN") emoji = "😎";
     else emoji = "🙂";
 
-    return <div className="text-lg">{emoji}</div>;
+    return <div className="text-2xl">{emoji}</div>;
   };
 
-  // test
-  // const foundMineCount = useRecoilValue(foundMineCountState);
-  // const openedCellCount = useRecoilValue(openedCellCountState);
-  // const gameStatus = useRecoilValue(gameStatusState);
-  //
   return (
     <div className="flex justify-center ">
       <div
@@ -59,7 +48,7 @@ export default function GameControls() {
             <button
               type="button"
               onClick={resetGame}
-              className="bg-stone-400 hover:bg-stone-500 px-4  "
+              className="bg-stone-400 hover:bg-stone-500 px-2 py-1 "
             >
               {showStatusEmoji()}
             </button>
@@ -70,18 +59,6 @@ export default function GameControls() {
             <GameTimer />
           </div>
         </div>
-
-        {/* TEST */}
-        {/* <div className="text-sm font-medium text-center sm:text-left">
-        찾은 지뢰: <span className="font-bold">{foundMineCount}</span>
-      </div>
-      <div className="text-sm font-medium text-center sm:text-left">
-        열린 셀: <span className="font-bold">{openedCellCount}</span>
-      </div>
-      <div className="text-sm font-medium text-center sm:text-left">
-        게임 상태: <span className="font-bold">{gameStatus}</span>
-      </div> */}
-        {/*  */}
       </div>
     </div>
   );
