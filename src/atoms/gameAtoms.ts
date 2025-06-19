@@ -72,3 +72,23 @@ export const foundMineCountState = atom<number>({
   key: "foundMineCountState",
   default: 0,
 });
+
+//승리조건을 확인하는 selector
+//1. 찾은 지뢰수 === 지뢰수
+//2. 전체 셀 칸 - 지뢰수 === 열린셀
+
+export const isGameWonState = selector<boolean>({
+  key: "isGameWonState",
+  get: ({ get }) => {
+    const [row, col] = get(boardGridState);
+    const totalCell = row * col;
+
+    const mineCount = get(mineCountState);
+    const openedCellCount = get(openedCellCountState);
+    const foundMineCount = get(foundMineCountState);
+
+    return (
+      foundMineCount === mineCount || totalCell - mineCount === openedCellCount
+    );
+  },
+});

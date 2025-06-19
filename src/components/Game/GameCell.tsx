@@ -5,6 +5,7 @@ import {
   flagCountState,
   foundMineCountState,
   gameStatusState,
+  isGameWonState,
   mineCountState,
   minePositionsState,
   openedCellCountState,
@@ -12,6 +13,7 @@ import {
 import flagImg from "@assets/flag.png";
 import closedImg from "@assets/closed.png";
 import { openAdjacentBlank, toggleFlag } from "@/utils/gameUtils";
+import { useEffect } from "react";
 
 export default function GameCell({
   rowIndex,
@@ -29,6 +31,7 @@ export default function GameCell({
   const setOpenedCellCount = useSetRecoilState(openedCellCountState);
   const [gameStatus, setGameStatus] = useRecoilState(gameStatusState);
   const minePostions = useRecoilValue(minePositionsState);
+  const isGameWon = useRecoilValue(isGameWonState);
 
   const handleOnContextMenu = () => {
     if (gameBoard !== null && !cell.isOpen) {
@@ -104,6 +107,12 @@ export default function GameCell({
     else if (cellValue === 0) return "";
     else return cellValue.toString(); // 1~8 숫자 표시
   };
+
+  useEffect(() => {
+    if (isGameWon) {
+      setGameStatus("WIN");
+    }
+  }, [isGameWon]);
   return (
     <div
       className={`flex text-[14px] font-medium items-center justify-center ${
@@ -122,7 +131,7 @@ export default function GameCell({
         backgroundSize: "24px 24px",
       }}
       onClick={(e) => {
-        if (gameStatus === "LOSE") {
+        if (gameStatus === "LOSE" || gameStatus === "WIN") {
           e.stopPropagation();
         } else {
           handleOnClick();
@@ -130,14 +139,14 @@ export default function GameCell({
       }}
       onContextMenu={(e) => {
         e.preventDefault(); //기본 우클릭 메뉴 방지함
-        if (gameStatus === "LOSE") {
+        if (gameStatus === "LOSE" || gameStatus === "WIN") {
           e.stopPropagation();
         } else {
           handleOnContextMenu();
         }
       }}
     >
-      <div>{cell.isOpen ? viewCellValue(cell.value) : null}</div>
+      <div>{!cell.isOpen ? viewCellValue(cell.value) : null}</div>
     </div>
   );
 }
