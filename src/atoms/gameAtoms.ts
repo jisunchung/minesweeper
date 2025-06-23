@@ -12,6 +12,14 @@ export const gameStatusState = atom<GameStatusType>({
   default: "READY",
 });
 
+export const isGameOverState = selector<boolean>({
+  key: "isGameOverState",
+  get: ({ get }) => {
+    const gameStatus = get(gameStatusState);
+    return gameStatus === "LOSE" || gameStatus === "WIN";
+  },
+});
+
 //타이머
 export const gameTimerState = atom<number>({
   key: "gameTimerState",

@@ -25,7 +25,7 @@ export default function useGameCellClick({
   const mineNum = useRecoilValue(mineCountState);
   const setFoundMineCount = useSetRecoilState(foundMineCountState);
   const setOpenedCellCount = useSetRecoilState(openedCellCountState);
-  const [gameStatus, setGameStatus] = useRecoilState(gameStatusState);
+  const setGameStatus = useSetRecoilState(gameStatusState);
   const minePostions = useRecoilValue(minePositionsState);
 
   const handleCellRightClick = () => {

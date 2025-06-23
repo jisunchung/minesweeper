@@ -1,6 +1,6 @@
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import type { cell } from "@/types/game";
-import { gameStatusState } from "@atoms/gameAtoms";
+import { isGameOverState } from "@atoms/gameAtoms";
 import flagImg from "@assets/flag.png";
 import closedImg from "@assets/closed.png";
 import useGameCellClick from "@/hooks/useGameCellClick";
@@ -14,8 +14,7 @@ export default function GameCell({
   colIndex: number;
   cell: cell;
 }) {
-  const [gameStatus, setGameStatus] = useRecoilState(gameStatusState);
-
+  const isGmaeOver = useRecoilValue(isGameOverState);
   const { handleCellLeftClick, handleCellRightClick } = useGameCellClick({
     rowIndex,
     colIndex,
@@ -44,20 +43,14 @@ export default function GameCell({
           : "none",
         backgroundSize: "24px 24px",
       }}
-      onClick={(e) => {
-        if (gameStatus === "LOSE" || gameStatus === "WIN") {
-          e.stopPropagation();
-        } else {
-          handleCellLeftClick();
-        }
+      onClick={() => {
+        if (isGmaeOver) return;
+        handleCellLeftClick();
       }}
       onContextMenu={(e) => {
         e.preventDefault(); //기본 우클릭 메뉴 방지함
-        if (gameStatus === "LOSE" || gameStatus === "WIN") {
-          e.stopPropagation();
-        } else {
-          handleCellRightClick();
-        }
+        if (isGmaeOver) return;
+        handleCellRightClick();
       }}
     >
       <div>{cell.isOpen ? viewCellValue(cell.value) : null}</div>
