@@ -5,7 +5,6 @@ import {
   flagCountState,
   foundMineCountState,
   gameStatusState,
-  isGameWonState,
   mineCountState,
   minePositionsState,
   openedCellCountState,
@@ -13,7 +12,6 @@ import {
 import flagImg from "@assets/flag.png";
 import closedImg from "@assets/closed.png";
 import { openAdjacentBlank, toggleFlag } from "@/utils/gameUtils";
-import { useEffect } from "react";
 
 export default function GameCell({
   rowIndex,
@@ -31,7 +29,6 @@ export default function GameCell({
   const setOpenedCellCount = useSetRecoilState(openedCellCountState);
   const [gameStatus, setGameStatus] = useRecoilState(gameStatusState);
   const minePostions = useRecoilValue(minePositionsState);
-  const isGameWon = useRecoilValue(isGameWonState);
 
   const handleOnContextMenu = () => {
     if (!cell.isOpen) {
@@ -108,11 +105,6 @@ export default function GameCell({
     else return cellValue.toString(); // 1~8 숫자 표시
   };
 
-  useEffect(() => {
-    if (isGameWon) {
-      setGameStatus("WIN");
-    }
-  }, [isGameWon]);
   return (
     <div
       className={`flex text-[14px] font-medium items-center justify-center ${
