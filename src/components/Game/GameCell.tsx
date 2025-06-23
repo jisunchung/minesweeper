@@ -16,7 +16,6 @@ export default function GameCell({
   const { handleCellLeftClick, handleCellRightClick } = useGameCellClick({
     rowIndex,
     colIndex,
-    cell,
   });
   const viewCellValue = (cellValue: number) => {
     if (cellValue === -1) return "💣";
