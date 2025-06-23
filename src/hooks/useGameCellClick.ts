@@ -3,6 +3,7 @@ import {
   flagCountState,
   foundMineCountState,
   gameStatusState,
+  isGameOverState,
   mineCountState,
   minePositionsState,
   openedCellCountState,
@@ -27,8 +28,9 @@ export default function useGameCellClick({
   const setOpenedCellCount = useSetRecoilState(openedCellCountState);
   const setGameStatus = useSetRecoilState(gameStatusState);
   const minePostions = useRecoilValue(minePositionsState);
-
+  const isGmaeOver = useRecoilValue(isGameOverState);
   const handleCellRightClick = () => {
+    if (isGmaeOver) return;
     if (!cell.isOpen) {
       console.log(`우클릭 ${rowIndex}, ${colIndex} , value : ${cell.value}`);
 
@@ -50,6 +52,7 @@ export default function useGameCellClick({
   };
 
   const handleCellLeftClick = () => {
+    if (isGmaeOver) return;
     if (!cell.flag && !cell.isOpen) {
       console.log(
         `셀 클릭 : ${rowIndex}, ${colIndex} cell value: ${cell.value}`
