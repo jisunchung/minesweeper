@@ -112,12 +112,21 @@ export const openAdjacentBlank = (
           newRow < ROWS &&
           newCol >= 0 &&
           newCol < COLS &&
-          openedBoard[newRow][newCol].value === 0 &&
           !visited[newRow][newCol]
         ) {
-          queue.push([newRow, newCol]);
           visited[newRow][newCol] = true;
-          updateCellCount++;
+
+          // 지뢰는 제외
+          if (openedBoard[newRow][newCol].value === 0) {
+            queue.push([newRow, newCol]);
+            updateCellCount++;
+          }
+
+          // 숫자 셀도 열기
+          if (openedBoard[newRow][newCol].value !== -1) {
+            openedBoard[newRow][newCol].isOpen = true;
+            updateCellCount++;
+          }
         }
       }
     }
