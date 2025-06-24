@@ -10,12 +10,12 @@ export default function useTimer() {
 
     if (gameStatus === "START") {
       timer = setInterval(() => {
-        setTime((prev) => prev + 1);
-      }, 1000);
+        setTime((prev) => prev + 0.01);
+      }, 10);
     }
     return () => {
       if (timer) clearInterval(timer);
     };
   }, [gameStatus]);
-  return time;
+  return time.toFixed(0);
 }
