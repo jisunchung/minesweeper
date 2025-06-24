@@ -25,7 +25,7 @@ export default function GameControls() {
   };
 
   return (
-    <div className="flex justify-center ">
+    <div className="flex justify-center">
       <div
         className="flex justify-center bg-gray-300"
         style={{

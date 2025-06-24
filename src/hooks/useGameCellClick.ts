@@ -1,5 +1,7 @@
 import {
   BoardState,
+  cellLeftClickCount,
+  cellRightClickCount,
   flagCountState,
   foundMineCountState,
   gameStatusState,
@@ -28,13 +30,16 @@ export default function useGameCellClick({
   const minePostions = useRecoilValue(minePositionsState);
   const isGameOver = useRecoilValue(isGameOverState);
 
+  const setCellLeftClickCount = useSetRecoilState(cellLeftClickCount);
+  const setCellRightClickCount = useSetRecoilState(cellRightClickCount);
+
   const handleCellRightClick = () => {
     const cell = gameBoard[rowIndex][colIndex];
 
     if (isGameOver || cell.isOpen) return;
 
     console.log(`우클릭 ${rowIndex}, ${colIndex} , value : ${cell.value}`);
-
+    setCellRightClickCount((prev) => prev + 1);
     if (gameStatus === "READY") setGameStatus("START");
 
     //깃발의 개수는 지뢰의 개수를 넘길 수 없음
@@ -57,7 +62,7 @@ export default function useGameCellClick({
     if (isGameOver || cell.flag || cell.isOpen) return;
 
     console.log(`셀 클릭 : ${rowIndex}, ${colIndex} cell value: ${cell.value}`);
-
+    setCellLeftClickCount((prev) => prev + 1);
     //게임 시작
     if (gameStatus === "READY") setGameStatus("START");
 

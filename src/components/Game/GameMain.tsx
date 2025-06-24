@@ -7,7 +7,7 @@ export default function GameMain() {
   const board = useRecoilValue(BoardState);
 
   return (
-    <main className="flex-1 p-4 bg-gray-400">
+    <main className="flex-row">
       <GameControls />
       {board && <GameBoard board={board} />}
     </main>

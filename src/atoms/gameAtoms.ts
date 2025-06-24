@@ -106,3 +106,13 @@ export const isGameWonState = selector<boolean>({
     );
   },
 });
+
+//클릭 수
+export const cellLeftClickCount = atom<number>({
+  key: "cellLeftClickCount",
+  default: 0,
+});
+export const cellRightClickCount = atom<number>({
+  key: "cellRightClickCount",
+  default: 0,
+});
