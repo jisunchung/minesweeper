@@ -1,7 +1,10 @@
 export default function GameFooter() {
   return (
-    <footer className="bg-[#393e46] text-[#ffca3a] font-bold text-xl  p-4 text-center border-t-4 border-[#222831]">
-      <a className="text-sm" href="https://github.com/jisunchung/minesweeper">
+    <footer className="bg-[#393e46] text-[#ffca3a]  font-bold text-xl  p-4 text-center border-t-4 border-[#222831]">
+      <a
+        className="text-sm hover:bg-[#6a4c93] p-2 rounded"
+        href="https://github.com/jisunchung/minesweeper"
+      >
         github
       </a>
     </footer>
