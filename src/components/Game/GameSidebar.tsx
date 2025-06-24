@@ -1,6 +1,7 @@
 import { useRecoilState } from "recoil";
 import { LEVEL } from "@/types/game";
 import { levelState } from "@atoms/gameAtoms";
+import Button from "../common/button";
 
 interface GameSidebarProps {
   title: string;
@@ -23,16 +24,22 @@ export function LevelSelector() {
   return (
     <div className="flex flex-col gap-2 ">
       {Object.values(LEVEL).map((lv) => (
-        <button
+        // <button
+        //   key={lv}
+        //   type="button"
+        //   className={`border-2 border-[#222831] rounded px-3 py-1 font-bold ${
+        //     level === lv ? "bg-[#1982c4]" : "hover:bg-[#6a4c93]"
+        //   }`}
+        //   onClick={() => setLevel(lv)}
+        // >
+        //   {lv}
+        // </button>
+        <Button
           key={lv}
-          type="button"
-          className={`border-2 border-[#222831] rounded px-3 py-1 font-bold ${
-            level === lv ? "bg-[#1982c4]" : "hover:bg-[#6a4c93]"
-          }`}
-          onClick={() => setLevel(lv)}
-        >
-          {lv}
-        </button>
+          handleOnClick={() => setLevel(lv)}
+          label={lv}
+          isSelected={level === lv}
+        />
       ))}
     </div>
   );

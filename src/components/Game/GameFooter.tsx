@@ -1,12 +1,16 @@
+import Button from "../common/button";
+
 export default function GameFooter() {
+  const handleOpenNewWindow = () => {
+    window.open(
+      "https://github.com/jisunchung/minesweeper",
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
   return (
-    <footer className="bg-[#393e46] text-[#ffca3a]  font-bold text-xl  p-4 text-center border-t-4 border-[#222831]">
-      <a
-        className="text-sm hover:bg-[#6a4c93] p-2 rounded"
-        href="https://github.com/jisunchung/minesweeper"
-      >
-        github
-      </a>
+    <footer className="bg-[#393e46] text-[#ffca3a] p-4 text-center border-t-4 border-[#222831]">
+      <Button handleOnClick={handleOpenNewWindow} label="Github" />
     </footer>
   );
 }
