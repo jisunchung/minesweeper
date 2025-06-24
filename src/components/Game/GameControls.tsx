@@ -44,11 +44,11 @@ export default function GameControls() {
           </div>
 
           {/* 새 게임 */}
-          <div className="flex justify-center basis-1/3 m-2">
+          <div className="flex justify-center basis-1/3 m-2 ">
             <button
               type="button"
               onClick={resetGame}
-              className="bg-stone-400 hover:bg-stone-500 px-2 py-1 "
+              className="bg-stone-400 hover:bg-stone-500 px-2 py-1 border-1 border-stone-900"
             >
               {showStatusEmoji()}
             </button>

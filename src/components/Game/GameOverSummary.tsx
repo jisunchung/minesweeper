@@ -19,7 +19,7 @@ export default function GameOverSummary() {
       {isGameOver ? (
         <div
           className="flex flex-col justify-center items-start bg-neutral-100 m-4 p-4 shadow-xl border-4"
-          style={{ height: "150px", width: "150px" }}
+          style={{ height: "150px", width: "180px" }}
         >
           <p>시간 : {time.toFixed(2)}s</p>
           <p>찾은 지뢰 수 : {foundMineCount}</p>

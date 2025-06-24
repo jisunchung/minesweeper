@@ -6,7 +6,7 @@ import GameOverSummary from "./GameOverSummary";
 
 export default function GameLayout() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen font-mono">
       <GameHeader />
 
       {/* 반응형 섹션: sm에서는 column, md 이상에서는 row */}
@@ -16,7 +16,7 @@ export default function GameLayout() {
           <LevelSelector />
         </GameSidebar>
 
-        <div className="flex flex-col md:flex-row flex-1 justify-center bg-gray-400 p-4">
+        <div className="flex flex-col md:flex-row flex-1 justify-center bg-[#544d3c] p-4">
           {/* Main */}
           <GameMain />
           {/* Modal */}
@@ -24,7 +24,7 @@ export default function GameLayout() {
         </div>
 
         {/* Aside */}
-        <GameSidebar title="게임 조작 설명">
+        <GameSidebar title="게임 방법">
           <GameDescription />
         </GameSidebar>
       </section>

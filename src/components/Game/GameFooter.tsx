@@ -1,7 +1,9 @@
 export default function GameFooter() {
   return (
-    <footer className="bg-gray-800 text-white p-4 text-center">
-      <p className="text-sm">© 2025 지뢰찾기 게임</p>
+    <footer className="bg-[#393e46] text-[#ffca3a] font-bold text-xl  p-4 text-center border-t-4 border-[#222831]">
+      <a className="text-sm" href="https://github.com/jisunchung/minesweeper">
+        github
+      </a>
     </footer>
   );
 }

@@ -8,13 +8,9 @@ interface GameSidebarProps {
   className?: string;
 }
 
-export default function GameSidebar({
-  title,
-  children,
-  className = "",
-}: GameSidebarProps) {
+export default function GameSidebar({ title, children }: GameSidebarProps) {
   return (
-    <div className={`bg-gray-100 p-4 w-full md:w-52 ${className}`}>
+    <div className={`bg-[#e0e0c6] w-full md:w-52 p-4`}>
       <h2 className="text-lg font-semibold mb-3">{title}</h2>
       {children}
     </div>
@@ -25,13 +21,13 @@ export function LevelSelector() {
   const [level, setLevel] = useRecoilState(levelState);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 ">
       {Object.values(LEVEL).map((lv) => (
         <button
           key={lv}
           type="button"
-          className={`px-3 py-2 rounded text-white transition ${
-            level === lv ? "bg-sky-700" : "bg-sky-500 hover:bg-sky-600"
+          className={`border-2 border-[#222831] rounded px-3 py-1 font-bold ${
+            level === lv ? "bg-[#1982c4]" : "hover:bg-[#6a4c93]"
           }`}
           onClick={() => setLevel(lv)}
         >
@@ -44,22 +40,34 @@ export function LevelSelector() {
 
 export function GameDescription() {
   return (
-    <div>
-      <ul className="text-sm text-gray-700 list-disc pl-4 space-y-1">
+    <div className="border-2 border-[#222831] rounded-md px-2 py-1 text-sm text-gray-800">
+      <ul className="space-y-3 list-none">
         <li>
-          <b>왼쪽 클릭</b>: 셀을 엽니다. 숫자는 주변 8칸의 지뢰 개수를
-          의미합니다. 지뢰를 클릭하면 게임이 종료됩니다.
+          <p className="font-medium">▪ 왼쪽 클릭</p>
+          <p className="ml-4">지뢰가 있는 칸을 클릭하면 게임은 종료됩니다.</p>
         </li>
         <li>
-          <b>오른쪽 클릭</b>: 셀에 깃발을 꽂거나 해제합니다. 깃발은 지뢰가 있을
-          것 같은 칸에 표시하세요.
+          <p className="font-medium">▪ 오른쪽 클릭</p>
+          <p className="ml-4">
+            지뢰가 있을 것으로 예상되는 칸에 깃발을 표시하세요.
+          </p>
         </li>
         <li>
-          <b>다시 시작 버튼</b>: 게임을 초기화하고 새로 시작합니다.
+          <p className="font-medium">▪ 보드판의 숫자</p>
+          <p className="ml-4">
+            숫자는 해당 셀을 기준으로 주변 8칸에 있는 지뢰의 개수를 의미합니다.
+          </p>
         </li>
         <li>
-          <b>승리 조건</b>: 모든 지뢰가 아닌 셀을 열거나 깃발을 모두 꽂으면
-          승리합니다.
+          <p className="font-medium">▪ 이모지 버튼</p>
+          <p className="ml-4">게임을 초기화하여 새로 시작합니다.</p>
+        </li>
+        <li>
+          <p className="font-medium">▪ 승리 조건</p>
+          <p className="ml-4">
+            지뢰가 아닌 모든 셀을 열거나, 모든 지뢰 위치에 정확히 깃발을 꽂으면
+            게임에서 승리합니다.
+          </p>
         </li>
       </ul>
     </div>
