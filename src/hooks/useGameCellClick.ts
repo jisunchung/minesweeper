@@ -1,7 +1,7 @@
 import {
   BoardState,
-  cellLeftClickCount,
-  cellRightClickCount,
+  cellLeftClickCountState,
+  cellRightClickCountState,
   flagCountState,
   foundMineCountState,
   gameStatusState,
@@ -13,6 +13,8 @@ import {
 import { type cell } from "@/types/game";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { openAdjacentBlank, toggleFlag } from "@/utils/gameUtils";
+import { useEffect } from "react";
+import { gameOverState } from "@/atoms/gameOverSummaryAtom";
 
 export default function useGameCellClick({
   rowIndex,
@@ -24,14 +26,32 @@ export default function useGameCellClick({
   const [gameBoard, setGameBoard] = useRecoilState(BoardState);
   const [flagCount, setFlagCount] = useRecoilState(flagCountState);
   const mineNum = useRecoilValue(mineCountState);
-  const setFoundMineCount = useSetRecoilState(foundMineCountState);
+  const [foundMineCount, setFoundMineCount] =
+    useRecoilState(foundMineCountState);
   const setOpenedCellCount = useSetRecoilState(openedCellCountState);
   const [gameStatus, setGameStatus] = useRecoilState(gameStatusState);
   const minePostions = useRecoilValue(minePositionsState);
   const isGameOver = useRecoilValue(isGameOverState);
 
-  const setCellLeftClickCount = useSetRecoilState(cellLeftClickCount);
-  const setCellRightClickCount = useSetRecoilState(cellRightClickCount);
+  const [cellLeftClickCount, setCellLeftClickCount] = useRecoilState(
+    cellLeftClickCountState
+  );
+  const [cellRightClickCount, setCellRightClickCount] = useRecoilState(
+    cellRightClickCountState
+  );
+  const setGameOverState = useSetRecoilState(gameOverState);
+
+  //게임 over
+  useEffect(() => {
+    setGameOverState((prev) => {
+      return {
+        ...prev,
+        foundMine: foundMineCount,
+        leftClick: cellLeftClickCount,
+        rightClick: cellRightClickCount,
+      };
+    });
+  }, [isGameOver]);
 
   const handleCellRightClick = () => {
     const cell = gameBoard[rowIndex][colIndex];

@@ -25,10 +25,6 @@ export const gameTimerState = atom<number>({
   key: "gameTimerState",
   default: 0,
 });
-export const finalTimeState = atom<number>({
-  key: "finalTimeState",
-  default: 0,
-});
 
 //보드
 export const BoardState = atom<cell[][]>({
@@ -112,11 +108,11 @@ export const isGameWonState = selector<boolean>({
 });
 
 //클릭 수
-export const cellLeftClickCount = atom<number>({
+export const cellLeftClickCountState = atom<number>({
   key: "cellLeftClickCount",
   default: 0,
 });
-export const cellRightClickCount = atom<number>({
+export const cellRightClickCountState = atom<number>({
   key: "cellRightClickCount",
   default: 0,
 });

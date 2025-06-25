@@ -1,8 +1,8 @@
 import {
   boardGridState,
   BoardState,
-  cellLeftClickCount,
-  cellRightClickCount,
+  cellLeftClickCountState,
+  cellRightClickCountState,
   flagCountState,
   foundMineCountState,
   gameStatusState,
@@ -22,8 +22,8 @@ export function useGameReset() {
   const setOpenedCellCountState = useSetRecoilState(openedCellCountState);
   const setGameStatus = useSetRecoilState(gameStatusState);
   const setGameTimer = useSetRecoilState(gameTimerState);
-  const setCellLeftClickCount = useSetRecoilState(cellLeftClickCount);
-  const setCellRightClickCount = useSetRecoilState(cellRightClickCount);
+  const setCellLeftClickCount = useSetRecoilState(cellLeftClickCountState);
+  const setCellRightClickCount = useSetRecoilState(cellRightClickCountState);
   const mineCount = useRecoilValue(mineCountState);
   const [row, col] = useRecoilValue(boardGridState);
 
