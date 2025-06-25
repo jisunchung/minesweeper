@@ -76,7 +76,7 @@ export const deepCopyBoard = (board: cell[][]): cell[][] => {
   return board.map((row) => row.map((cell) => ({ ...cell })));
 };
 
-//인접한 빈칸 모두 열기
+//인접한 빈칸을 열고 주변 숫자칸까지 열어주기
 export const openAdjacentBlank = (
   board: cell[][],
   startRow: number,
@@ -106,7 +106,7 @@ export const openAdjacentBlank = (
         if (i === 0 && j === 0) continue; // 현재 셀은 건너뛰기
         const [newRow, newCol] = [row + i, col + j];
 
-        // 유효한 위치이고 아직 방문하지 않고 빈 셀인 경우에만 셀만 큐에 추가
+        // 유효한 위치이고 아직 방문하지 않은 경우
         if (
           newRow >= 0 &&
           newRow < ROWS &&
@@ -116,13 +116,13 @@ export const openAdjacentBlank = (
         ) {
           visited[newRow][newCol] = true;
 
-          // 지뢰는 제외
+          //빈칸인 경우 계속 탐색해 나가기 위해서 큐에 넣어준다
           if (openedBoard[newRow][newCol].value === 0) {
             queue.push([newRow, newCol]);
             updateCellCount++;
           }
 
-          // 숫자 셀도 열기
+          // 숫자셀인 경우 셀을 열어준다
           if (openedBoard[newRow][newCol].value !== -1) {
             openedBoard[newRow][newCol].isOpen = true;
             updateCellCount++;

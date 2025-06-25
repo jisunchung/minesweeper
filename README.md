@@ -66,35 +66,55 @@ export const openAdjacentBlank = (
   startCol: number
 ): { openedBoard: cell[][]; updateCellCount: number } => {
   const openedBoard = deepCopyBoard(board);
+
   const ROWS = openedBoard.length;
   const COLS = openedBoard[0].length;
   const visited = Array.from({ length: ROWS }, () => Array(COLS).fill(false));
+
+  // BFS를 위한 큐
   const queue: [number, number][] = [[startRow, startCol]];
   let updateCellCount = 1;
+
   let front = 0;
   while (front < queue.length) {
     const [row, col] = queue[front++];
+
+    // 현재 셀 방문 표시
     visited[row][col] = true;
     openedBoard[row][col].isOpen = true;
+
+    // 주변 8방향의 셀을 큐에 추가
     for (let i = -1; i <= 1; i++) {
       for (let j = -1; j <= 1; j++) {
-        if (i === 0 && j === 0) continue;
+        if (i === 0 && j === 0) continue; // 현재 셀은 건너뛰기
         const [newRow, newCol] = [row + i, col + j];
+
+        // 유효한 위치이고 아직 방문하지 않은 경우
         if (
           newRow >= 0 &&
           newRow < ROWS &&
           newCol >= 0 &&
           newCol < COLS &&
-          openedBoard[newRow][newCol].value === 0 &&
           !visited[newRow][newCol]
         ) {
-          queue.push([newRow, newCol]);
           visited[newRow][newCol] = true;
-          updateCellCount++;
+
+          //빈칸인 경우 계속 탐색해 나가기 위해서 큐에 넣어준다
+          if (openedBoard[newRow][newCol].value === 0) {
+            queue.push([newRow, newCol]);
+            updateCellCount++;
+          }
+
+          // 숫자셀인 경우 셀을 열어준다
+          if (openedBoard[newRow][newCol].value !== -1) {
+            openedBoard[newRow][newCol].isOpen = true;
+            updateCellCount++;
+          }
         }
       }
     }
   }
+
   return { openedBoard, updateCellCount };
 };
 ```
@@ -105,7 +125,8 @@ BFS(너비 우선 탐색) 알고리즘을 이용해 인접한 빈 칸들을 한 
 - queue를 이용해 인접 셀들을 순차적으로 탐색합니다.
 - 중복 탐색을 방지하기 위해 visited 배열을 사용합니다.
 - 주변 8방향 셀 중 값이 0인 셀을 계속해서 큐에 추가하여 확장합니다.
-- 클릭한 셀과 연결된 모든 빈 칸을 열고, 열린 셀의 개수를 함께 반환합니다.
+- 숫자 셀인 경우에는 칸을 열어줍니다.
+- 클릭한 셀과 연결된 빈칸과 숫자칸을 열고, 열린 셀의 개수를 함께 반환합니다.
 
 ---
 
