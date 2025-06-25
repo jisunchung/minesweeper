@@ -17,5 +17,5 @@ export default function useTimer() {
       if (timer) clearInterval(timer);
     };
   }, [gameStatus]);
-  return time.toFixed(0);
+  return time;
 }

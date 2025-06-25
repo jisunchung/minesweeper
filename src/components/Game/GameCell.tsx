@@ -22,6 +22,7 @@ export default function GameCell({
     else if (cellValue === 0) return "";
     else return cellValue.toString(); // 1~8 숫자 표시
   };
+
   return (
     <div
       className={`flex text-[14px] font-medium items-center justify-center ${

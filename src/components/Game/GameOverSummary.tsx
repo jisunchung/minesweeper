@@ -1,15 +1,15 @@
 import {
   cellLeftClickCount,
   cellRightClickCount,
+  finalTimeState,
   foundMineCountState,
-  gameTimerState,
   isGameOverState,
 } from "@/atoms/gameAtoms";
 import { useRecoilValue } from "recoil";
 
 export default function GameOverSummary() {
   const isGameOver = useRecoilValue(isGameOverState);
-  const time = useRecoilValue(gameTimerState);
+  const finalTime = useRecoilValue(finalTimeState);
   const foundMineCount = useRecoilValue(foundMineCountState);
   const leftClickCount = useRecoilValue(cellLeftClickCount);
   const rightClickCount = useRecoilValue(cellRightClickCount);
@@ -21,7 +21,7 @@ export default function GameOverSummary() {
           className="flex flex-col justify-center items-start bg-neutral-100 m-4 p-4 shadow-xl border-4"
           style={{ height: "150px", width: "180px" }}
         >
-          <p>시간 : {time.toFixed(2)}s</p>
+          <p>시간 : {finalTime && finalTime.toFixed(2)}s</p>
           <p>찾은 지뢰 수 : {foundMineCount}</p>
           <p>클릭 수 : {leftClickCount}</p>
           <p>우클릭 수 : {rightClickCount}</p>

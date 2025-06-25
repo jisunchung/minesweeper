@@ -25,6 +25,10 @@ export const gameTimerState = atom<number>({
   key: "gameTimerState",
   default: 0,
 });
+export const finalTimeState = atom<number>({
+  key: "finalTimeState",
+  default: 0,
+});
 
 //보드
 export const BoardState = atom<cell[][]>({

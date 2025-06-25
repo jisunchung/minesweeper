@@ -4,6 +4,7 @@ import GameCell from "./GameCell";
 export default function GameBoard({ board }: { board: cell[][] }) {
   const rowCount = board.length;
   const colCount = board[0]?.length || 0;
+
   return (
     <div className="flex justify-center">
       <div
