@@ -13,7 +13,8 @@ import {
 import { type cell } from "@/types/game";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { openAdjacentBlank, toggleFlag } from "@/utils/gameUtils";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
+import { gameOverState } from "@/atoms/gameOverSummaryAtom";
 
 export default function useGameCellClick({
   rowIndex,
@@ -37,6 +38,21 @@ export default function useGameCellClick({
   const [cellRightClickCount, setCellRightClickCount] = useRecoilState(
     cellRightClickCountState
   );
+  const setGameOverState = useSetRecoilState(gameOverState);
+
+  //게임 over
+  useEffect(() => {
+    if (!isGameOver) return;
+    console.log("게임 over");
+    setGameOverState((prev) => {
+      return {
+        ...prev,
+        foundMine: foundMineCount,
+        leftClick: cellLeftClickCount,
+        rightClick: cellRightClickCount,
+      };
+    });
+  }, [isGameOver]);
 
   const handleCellRightClick = useCallback(() => {
     const cell = gameBoard[rowIndex][colIndex];
