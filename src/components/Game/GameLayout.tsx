@@ -2,7 +2,6 @@ import GameHeader from "./GameHeader";
 import GameSidebar, { LevelSelector, GameDescription } from "./GameSidebar";
 import GameMain from "./GameMain";
 import GameFooter from "./GameFooter";
-import GameOverSummary from "./GameOverSummary";
 
 export default function GameLayout() {
   return (
@@ -16,12 +15,8 @@ export default function GameLayout() {
           <LevelSelector />
         </GameSidebar>
 
-        <div className="flex flex-col md:flex-row flex-1 justify-center bg-[#544d3c] p-4">
-          {/* Main */}
-          <GameMain />
-          {/* Modal */}
-          <GameOverSummary />
-        </div>
+        {/* Main */}
+        <GameMain />
 
         {/* Aside */}
         <GameSidebar title="게임 방법">
