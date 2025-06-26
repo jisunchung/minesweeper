@@ -13,8 +13,7 @@ import {
 import { type cell } from "@/types/game";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { openAdjacentBlank, toggleFlag } from "@/utils/gameUtils";
-import { useEffect } from "react";
-import { gameOverState } from "@/atoms/gameOverSummaryAtom";
+import { useCallback } from "react";
 
 export default function useGameCellClick({
   rowIndex,
@@ -32,28 +31,14 @@ export default function useGameCellClick({
   const [gameStatus, setGameStatus] = useRecoilState(gameStatusState);
   const minePostions = useRecoilValue(minePositionsState);
   const isGameOver = useRecoilValue(isGameOverState);
-
   const [cellLeftClickCount, setCellLeftClickCount] = useRecoilState(
     cellLeftClickCountState
   );
   const [cellRightClickCount, setCellRightClickCount] = useRecoilState(
     cellRightClickCountState
   );
-  const setGameOverState = useSetRecoilState(gameOverState);
 
-  //게임 over
-  useEffect(() => {
-    setGameOverState((prev) => {
-      return {
-        ...prev,
-        foundMine: foundMineCount,
-        leftClick: cellLeftClickCount,
-        rightClick: cellRightClickCount,
-      };
-    });
-  }, [isGameOver]);
-
-  const handleCellRightClick = () => {
+  const handleCellRightClick = useCallback(() => {
     const cell = gameBoard[rowIndex][colIndex];
 
     if (isGameOver || cell.isOpen) return;
@@ -75,9 +60,22 @@ export default function useGameCellClick({
     if (cell.value === -1) {
       setFoundMineCount((prev) => prev + updateBoard.flagChangeAmount);
     }
-  };
+  }, [
+    rowIndex,
+    colIndex,
+    gameBoard,
+    isGameOver,
+    gameStatus,
+    setCellRightClickCount,
+    setFlagCount,
+    setGameBoard,
+    setFoundMineCount,
+    mineNum,
+    flagCount,
+    setGameStatus,
+  ]);
 
-  const handleCellLeftClick = () => {
+  const handleCellLeftClick = useCallback(() => {
     const cell = gameBoard[rowIndex][colIndex];
     if (isGameOver || cell.flag || cell.isOpen) return;
 
@@ -87,7 +85,7 @@ export default function useGameCellClick({
     if (gameStatus === "READY") setGameStatus("START");
 
     //새로운 보드판 생성
-    let newBoard: cell[][] = gameBoard.map((row) =>
+    const newBoard: cell[][] = gameBoard.map((row) =>
       row.map((cell) => ({ ...cell }))
     );
 
@@ -101,29 +99,47 @@ export default function useGameCellClick({
     else if (value === 0) handleEmptyCellClick(newBoard);
 
     setGameBoard(newBoard);
-  };
-  const handleNumberCellClick = (board: cell[][]): void => {
-    board[rowIndex][colIndex] = {
-      ...board[rowIndex][colIndex],
-      isOpen: true,
-    };
-    setOpenedCellCount((prev) => prev + 1);
-  };
-  const handleMineClick = (board: cell[][]): void => {
-    minePostions.forEach(([mineRow, mineCol]) => {
-      board[mineRow][mineCol].isOpen = true;
-    });
+  }, [
+    rowIndex,
+    colIndex,
+    gameBoard,
+    isGameOver,
+    gameStatus,
+    setCellLeftClickCount,
+    setGameStatus,
+    setGameBoard,
+  ]);
+  const handleNumberCellClick = useCallback(
+    (board: cell[][]): void => {
+      board[rowIndex][colIndex] = {
+        ...board[rowIndex][colIndex],
+        isOpen: true,
+      };
+      setOpenedCellCount((prev) => prev + 1);
+    },
+    [rowIndex, colIndex, setOpenedCellCount]
+  );
+  const handleMineClick = useCallback(
+    (board: cell[][]): void => {
+      minePostions.forEach(([mineRow, mineCol]) => {
+        board[mineRow][mineCol].isOpen = true;
+      });
 
-    setGameStatus("LOSE");
-  };
-  const handleEmptyCellClick = (board: cell[][]): void => {
-    const { openedBoard, updateCellCount } = openAdjacentBlank(
-      board,
-      rowIndex,
-      colIndex
-    );
-    setOpenedCellCount((prev) => prev + updateCellCount);
-    board.splice(0, board.length, ...openedBoard);
-  };
+      setGameStatus("LOSE");
+    },
+    [minePostions, setGameStatus]
+  );
+  const handleEmptyCellClick = useCallback(
+    (board: cell[][]): void => {
+      const { openedBoard, updateCellCount } = openAdjacentBlank(
+        board,
+        rowIndex,
+        colIndex
+      );
+      setOpenedCellCount((prev) => prev + updateCellCount);
+      board.splice(0, board.length, ...openedBoard);
+    },
+    [rowIndex, colIndex, setOpenedCellCount]
+  );
   return { handleCellLeftClick, handleCellRightClick };
 }
