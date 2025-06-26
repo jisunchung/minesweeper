@@ -1,8 +1,9 @@
 import GameCell from "./GameCell";
 import { useRecoilValue } from "recoil";
 import { BoardState } from "@/atoms/gameAtoms";
+import React from "react";
 
-export default function GameBoard() {
+function GameBoard() {
   const board = useRecoilValue(BoardState);
   const rowCount = board.length;
   const colCount = board[0]?.length || 0;
@@ -38,3 +39,4 @@ export default function GameBoard() {
     </div>
   );
 }
+export default React.memo(GameBoard);
